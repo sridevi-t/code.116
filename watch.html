@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stopwatch & Clock</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-image:url("https://thumbs.dreamstime.com/b/vibrant-neon-night-street-tokyo-s-urban-rain-soaked-alley-vibrant-neon-night-street-tokyo-s-urban-rain-soaked-alley-346090034.jpg");
+
+    }
+    .container {
+      background:
+ 	 #10069D;
+      padding: 30px 40px;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+      text-align: center;
+     
+ 
+ 
+    }
+    h2 {
+      color: white;
+      margin-bottom: 10px;
+font-family:"Goudy Old Style", serif;font-size:35px;
+    }
+    #clock, #stopwatch {
+      font-size: 2.5em;
+      margin: 15px 0;
+      font-weight: bold;
+      color:  #f2f2f2;
+    }
+    button {
+      margin: 8px;
+      padding: 10px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: 0.3s;
+      color: #fff;
+    }
+    button:hover { opacity: 0.6; }
+    .start { background-color: #0BE50B; }
+    .stop { background-color: #ff0000; }
+    .reset { background-color: #1FB0FF; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Current Time</h2>
+    <div id="clock">00:00:00</div>
+
+    <h2>Stopwatch</h2>
+    <div id="stopwatch">00:00:00</div>
+    <button class="start" onclick="start()">Start</button>
+    <button class="stop" onclick="stop()">Stop</button>
+    <button class="reset" onclick="reset()">Reset</button>
+  </div>
+
+  <script>
+    // Clock
+    function updateClock() {
+      let now = new Date();
+      let h = String(now.getHours()).padStart(2,'0');
+      let m = String(now.getMinutes()).padStart(2,'0');
+      let s = String(now.getSeconds()).padStart(2,'0');
+      document.getElementById("clock").textContent = h + ":" + m + ":" + s;
+    }
+    setInterval(updateClock, 1000);
+    updateClock();
+
+    // Stopwatch
+    let swInterval, running = false;
+    let h=0, m=0, s=0;
+
+    function updateStopwatch() {
+      s++;
+      if(s==60){s=0;m++;}
+      if(m==60){m=0;h++;}
+      document.getElementById("stopwatch").textContent =
+        String(h).padStart(2,'0') + ":" +
+        String(m).padStart(2,'0') + ":" +
+        String(s).padStart(2,'0');
+    }
+
+    function start() {
+      if(!running){ swInterval = setInterval(updateStopwatch,1000); running=true; }
+    }
+    function stop() {
+      clearInterval(swInterval); running=false;
+    }
+    function reset() {
+      stop(); h=0;m=0;s=0;
+      document.getElementById("stopwatch").textContent = "00:00:00";
+    }
+  </script>
+</body>
+</html>
